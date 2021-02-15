@@ -2,6 +2,8 @@ import React,{ useState } from 'react';
 import {Grid,Typography,Link} from '@material-ui/core'
 import {AccountCircle,VpnKey} from '@material-ui/icons'
 import lang, {def_user,def_pass} from '../../../constants'
+import MyDiv from '../../../components/MyDiv'
+import MyAlert from '../../../components/MyAlert'
 import MyButton from '../../../components/MyButton'
 import MyPaper from '../../../components/MyPaper'
 import MyTextField from '../../../components/MyTextField'
@@ -12,17 +14,19 @@ import {fetch_user} from '../../../redux/actions/user'
 const Login = () => {
   const [username, setUsername] = useState(def_user);
   const [password, setPassword] = useState(def_pass);
+  const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
   //const data = useSelector(state => state)
-  const doLogin = () => {
 
+  const doLogin = () => {
+    setOpen(false)
     if(authUser(username,password)){
       const userInfo = getUser();
       dispatch(fetch_user(userInfo))
       return true
     }
-    alert('wrong credentials')
+    setOpen(true)
     return false
   }
 
@@ -67,9 +71,16 @@ const Login = () => {
             </Grid>
           </Grid>
 
+         <MyDiv open={open}>
+            <Grid item xs={12}>
+              <MyAlert severity={"error"}>{lang.login_error_lb}</MyAlert>
+            </Grid>
+         </MyDiv>
+
           <Grid item xs={12}>
             <Link href="#" variant="body2">{lang.forgotpass_btn}</Link>
           </Grid>
+
         </Grid>
     </MyPaper>
    );

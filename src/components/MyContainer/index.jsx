@@ -1,11 +1,19 @@
 import React from 'react'
-import {Container, Box} from '@material-ui/core'
+import {Container} from '@material-ui/core'
+import MyContainerStyle from './MyContainerStyle'
+import clsx from 'clsx';
 
 const MyContainer = (props) => {
+    const style = MyContainerStyle()
     return (
-        <Container>
-          <Box marginTop={2}>{props.content}</Box>
-        </Container>
+      <div>
+        <div className={style.drawerHeader}></div>
+        <main className={clsx(style.content, {[style.contentShift]: props.open,})}>
+          <Container>
+            {props.children}
+          </Container>
+        </main>
+      </div>
     )
 }
 
