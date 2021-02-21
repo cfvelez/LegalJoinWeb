@@ -2,25 +2,24 @@ import React from 'react'
 import Home from '../ui/Home'
 import Login from '../ui/Login'
 import {
-  BrowserRouter as Router ,
   Switch,
-  Route
+  Route,
 } from "react-router-dom";
 import routes from './routes'
 
 const RoutingSystem = () => {
-  console.log(routes)
   return (
-    <Router>
-      <Switch>
-      <Route path='/' exact>
+    <Switch>
+      <Route path={routes.home.root} exact>
         <Home/>
       </Route>
-      <Route path='/login' exact>
+      <Route path={routes.login.login} exact>
         <Login/>
       </Route>
-      </Switch>
-    </Router>
+      <Route>
+        <Home/>
+      </Route>
+    </Switch>
   )
 }
 

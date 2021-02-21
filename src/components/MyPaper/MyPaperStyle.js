@@ -1,11 +1,16 @@
 import {makeStyles} from '@material-ui/core'
 
-const MyPaperStyle = makeStyles(theme => ({
-  paper: {
-    padding: theme.spacing(2),
-    margin: 'auto',
-    width: "50%"
-  },
-}))
+const MyPaperStyle = (width) =>{
+
+  const myStyle = makeStyles(theme => ({
+    paper: {
+      padding: theme.spacing(2),
+      width: width,
+    },
+  }))
+
+  return myStyle();
+
+}
 
 export default MyPaperStyle

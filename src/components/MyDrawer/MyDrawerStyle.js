@@ -2,6 +2,7 @@ import {makeStyles} from '@material-ui/core'
 import {drawerWidth} from '../../constants'
 
 const MyDrawerStyle = makeStyles((theme) => ({
+  offset:  theme.mixins.toolbar,
   drawer: {
     width: drawerWidth,
     flexShrink: 0,

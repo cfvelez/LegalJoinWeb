@@ -1,8 +1,8 @@
-import {FETCH_USER} from '../../types/user/'
+import {UPDATE_USER} from '../../types/user/'
 
-export const fetch_user = (data) => {
+export const update_user = (data) => {
  return{
-      type: FETCH_USER,
+      type: UPDATE_USER,
       payload:data
     }
 }

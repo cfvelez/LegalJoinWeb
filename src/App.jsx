@@ -7,7 +7,7 @@ import MyApp from './components/MyApp'
 
 function App() {
   return (
-    <ThemeProvider theme={Theme == 'default' ? defaultTheme : darkTheme}>
+    <ThemeProvider theme={Theme === 'default' ? defaultTheme : darkTheme}>
       <MyApp />
     </ThemeProvider>
   );

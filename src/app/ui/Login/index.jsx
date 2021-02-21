@@ -7,9 +7,9 @@ import MyAlert from '../../../components/MyAlert'
 import MyButton from '../../../components/MyButton'
 import MyPaper from '../../../components/MyPaper'
 import MyTextField from '../../../components/MyTextField'
-import {getUser, authUser} from '../../remotes/Login'
-import {useDispatch,useSelector} from 'react-redux'
-import {fetch_user} from '../../../redux/actions/user'
+import {getUser, authUser} from '../../remotes/Auth'
+import {useDispatch} from 'react-redux'
+import {update_user} from '../../../redux/actions/user'
 
 const Login = () => {
   const [username, setUsername] = useState(def_user);
@@ -17,13 +17,12 @@ const Login = () => {
   const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
-  //const data = useSelector(state => state)
 
   const doLogin = () => {
     setOpen(false)
     if(authUser(username,password)){
       const userInfo = getUser();
-      dispatch(fetch_user(userInfo))
+      dispatch(update_user(userInfo))
       return true
     }
     setOpen(true)
@@ -31,7 +30,7 @@ const Login = () => {
   }
 
   return (
-    <MyPaper>
+    <MyPaper customWidth={'40%'}>
         <Grid container spacing={4} direction="column" alignItems="center" justify="center">
           <Grid item xs={12}>
             <Typography variant="h5">{lang.login_lb}</Typography>

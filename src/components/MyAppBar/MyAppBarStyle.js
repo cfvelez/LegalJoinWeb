@@ -1,7 +1,7 @@
 import {makeStyles} from '@material-ui/core'
 import {drawerWidth} from '../../constants'
 
-const MyNavBarStyle = makeStyles(theme => ({
+const MyAppBarStyle = makeStyles(theme => ({
   title: {
     flexGrow: 1,
   },
@@ -24,4 +24,4 @@ const MyNavBarStyle = makeStyles(theme => ({
   },
 }))
 
-export default MyNavBarStyle
+export default MyAppBarStyle

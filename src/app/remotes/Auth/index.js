@@ -13,3 +13,8 @@ export const authUser = (user, password) =>{
     else
       return false;
 }
+
+export const logOut = () =>{
+  return true;
+}
+

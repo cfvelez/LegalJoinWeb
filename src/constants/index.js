@@ -10,6 +10,7 @@ export const login_error_lb = 'Usuario y/o contraseña incorrectos'
 export const def_user = "cfvelez"
 export const def_pass = "123456"
 export const drawerWidth = 240;
+export const paperWidth = 260;
 
 const lang = {
   login_lb,
