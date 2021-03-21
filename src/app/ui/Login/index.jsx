@@ -10,22 +10,43 @@ import MyTextField from '../../../components/MyTextField'
 import {getUser, authUser} from '../../remotes/Auth'
 import {useDispatch} from 'react-redux'
 import {update_user} from '../../../redux/actions/user'
+import {Loading,changeDestination} from '../../../utils/AppBehaviour'
+import routes from '../../routing/routes'
+
+import {
+  useHistory,
+  useLocation
+} from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState(def_user);
   const [password, setPassword] = useState(def_pass);
-  const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const dispatch = useDispatch();
+  let history = useHistory();
+  let location = useLocation();
 
-  const doLogin = () => {
-    setOpen(false)
-    if(authUser(username,password)){
+  const handleRedirect = (destination) =>{
+    if(location.pathname !== routes.home.root && location.pathname !== routes.login.login){
+      destination = location.pathname;
+    }
+    changeDestination(destination);
+    history.replace(destination);
+  }
+
+  const doLogin = async() => {
+    setVisible(false)
+    Loading(true)
+    let logged = await authUser(username,password);
+    if(logged === true){
       const userInfo = getUser();
       dispatch(update_user(userInfo))
-      return true
+      Loading(false)
+      handleRedirect(routes.contact.list);
     }
-    setOpen(true)
+    Loading(false)
+
     return false
   }
 
@@ -62,7 +83,7 @@ const Login = () => {
           <Grid item xs={12} >
             <Grid container direction="row" spacing={2} alignItems="center" justify="center">
               <Grid item xs={12} sm={6} >
-                <MyButton color="primary" onClick={ ()=>doLogin()}>{lang.login_btn}</MyButton>
+                <MyButton color="primary" onClick={()=> doLogin()}>{lang.login_btn}</MyButton>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <MyButton color="secondary">{lang.register_btn}</MyButton>
@@ -70,7 +91,7 @@ const Login = () => {
             </Grid>
           </Grid>
 
-         <MyDiv open={open}>
+         <MyDiv open={visible}>
             <Grid item xs={12}>
               <MyAlert severity={"error"}>{lang.login_error_lb}</MyAlert>
             </Grid>

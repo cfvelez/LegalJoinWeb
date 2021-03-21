@@ -11,21 +11,45 @@ import {update_user} from '../../redux/actions/user'
 
 const MyAppBar = (props) => {
   const dispatch = useDispatch();
-
   const closeBtnAction = () => {
-   return doLogOut() ? props.onClickForNavigate(routes.home.root) : false;
+   return doLogOut() ? props.onClickForNavigate(routes.login.login) : false;
   }
   const accountBtnAction = () => {
     console.log('settings...')
-    props.onClickForNavigate(routes.login.login)
+    props.onClickForNavigate(routes.home.root)
     return true;
   }
 
   const doLogOut = () => {
-    if(props.isAuthorized){
+    if(props.isAuthorized === true){
       return props.user.logOut() ? dispatch(update_user(null)) : false;
     }
     return false
+  }
+  const ShowOptions = (props) =>{
+    let options = <></>;
+    if(props.visible === true){
+      options =
+            (<>
+              <IconButton
+                  color="inherit"
+                  aria-label="account"
+                  component={RouterLink}
+                  to={routes.login.login}
+                  onClick= {() => accountBtnAction()}>
+                <AccountCircle />
+              </IconButton>
+              <IconButton
+                  color="inherit"
+                  aria-label="close"
+                  component={RouterLink}
+                  to={routes.home.root}
+                  onClick= {() => closeBtnAction()}>
+                  <ExitToApp />
+              </IconButton>
+            </>);
+    }
+    return options;
   }
 
   const style = MyAppBarStyle()
@@ -43,29 +67,8 @@ const MyAppBar = (props) => {
                   <Menu />
               </IconButton>
             }
-
-            <Typography variant="h6" className={style.title}>{BRAND_NAME}</Typography>
-            <IconButton
-                  color="inherit"
-                  aria-label="account"
-                  component={RouterLink}
-                  to={routes.login.login}
-                  onClick= {() => accountBtnAction()}
-                  >
-              <AccountCircle />
-            </IconButton>
-
-          {props.isAuthorized &&
-            <IconButton
-                color="inherit"
-                aria-label="close"
-                component={RouterLink}
-                to={routes.home.root}
-                onClick= {() => closeBtnAction()}>
-                <ExitToApp />
-            </IconButton>
-          }
-
+          <Typography variant="h6" className={style.title}>{BRAND_NAME}</Typography>
+          <ShowOptions visible={props.isAuthorized} />
           </Toolbar>
         </AppBar>
       </div>

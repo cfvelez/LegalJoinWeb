@@ -7,10 +7,11 @@ export const login_btn = 'Ingresar'
 export const register_btn = 'Registro'
 export const forgotpass_btn = '¿Has olvidado la contraseña?'
 export const login_error_lb = 'Usuario y/o contraseña incorrectos'
-export const def_user = "cfvelez"
+export const def_user = "cfvelez9@gmail.com"
 export const def_pass = "123456"
 export const drawerWidth = 240;
 export const paperWidth = 260;
+export const SERVER = 'http://dev.legaljoin.com/api';
 
 const lang = {
   login_lb,

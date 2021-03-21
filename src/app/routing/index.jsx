@@ -1,6 +1,7 @@
 import React from 'react'
 import Home from '../ui/Home'
 import Login from '../ui/Login'
+import Contact from '../ui/Contact'
 import {
   Switch,
   Route,
@@ -16,8 +17,11 @@ const RoutingSystem = () => {
       <Route path={routes.login.login} exact>
         <Login/>
       </Route>
+      <Route path={routes.contact.list} exact>
+        <Contact/>
+      </Route>
       <Route>
-        <Home/>
+        <Login/>
       </Route>
     </Switch>
   )

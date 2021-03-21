@@ -1,2 +1,2 @@
-const root = { root :  "/" }
+const root = { root :  "/home" }
 export default root

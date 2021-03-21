@@ -25,6 +25,7 @@ const MyContainerStyle = makeStyles(theme => ({
 
   contentFix: {
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     padding: theme.spacing(0, 3),
     // necessary for content to be below app bar
