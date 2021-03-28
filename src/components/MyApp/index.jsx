@@ -30,7 +30,7 @@ const MyApp = () => {
           <MyDrawer open={open && isAuthorized} onClick={()=>setOpen(false)}>
              <MyMenu onClick = {(path) => handleClickMenuItem(path)}/>
           </MyDrawer>
-        <MyContainer open={open && isAuthorized} loading={status.loading}> <RoutingSystem/></MyContainer>
+        <MyContainer open={open && isAuthorized} loading={status.loading}> <RoutingSystem user = {user}/></MyContainer>
       </BrowserRouter>
     </div>
   )

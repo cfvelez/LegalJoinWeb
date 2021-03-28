@@ -1,4 +1,3 @@
-
 import {logOut} from '../remotes/Auth'
 export default class User {
 

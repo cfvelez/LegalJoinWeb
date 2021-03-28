@@ -1,5 +1,5 @@
-class AuthManager {
 
+class AuthManager {
   static isAuthenticated(user) {
     return user !== 'undefined' && user !== null;
   }

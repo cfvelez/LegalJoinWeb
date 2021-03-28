@@ -11,6 +11,8 @@ export const def_user = "cfvelez9@gmail.com"
 export const def_pass = "123456"
 export const drawerWidth = 240;
 export const paperWidth = 260;
+export const save = 'Guardar';
+export const cancel = 'Cancelar';
 export const SERVER = 'http://dev.legaljoin.com/api';
 
 const lang = {
@@ -20,7 +22,9 @@ const lang = {
   login_btn,
   register_btn,
   forgotpass_btn,
-  login_error_lb
+  login_error_lb,
+  save,
+  cancel
 }
 
 export default lang

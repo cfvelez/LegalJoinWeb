@@ -28,9 +28,8 @@ const Login = () => {
   let location = useLocation();
 
   const handleRedirect = (destination) =>{
-    if(location.pathname !== routes.home.root && location.pathname !== routes.login.login){
-      destination = location.pathname;
-    }
+    let homeRoutes = [routes.home.root,routes.login.login];
+    destination = homeRoutes.includes(destination) ? location.pathname : destination;
     changeDestination(destination);
     history.replace(destination);
   }
