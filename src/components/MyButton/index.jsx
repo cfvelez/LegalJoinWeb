@@ -7,7 +7,7 @@ const MyButton = (props) => {
   return (
       <Button variant="contained"
         color={props.color ? props.color : "primary"}
-        size="small"
+        size= {props.size ? props.size : "small"}
         className={style.button}
         onClick={props.onClick}
       >

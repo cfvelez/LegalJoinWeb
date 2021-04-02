@@ -2,8 +2,6 @@ import React,{ useState } from 'react';
 import {Grid,Typography,Link} from '@material-ui/core'
 import {AccountCircle,VpnKey} from '@material-ui/icons'
 import lang, {def_user,def_pass} from '../../../constants'
-import MyDiv from '../../../components/MyDiv'
-import MyAlert from '../../../components/MyAlert'
 import MyButton from '../../../components/MyButton'
 import MyPaper from '../../../components/MyPaper'
 import MyTextField from '../../../components/MyTextField'
@@ -21,7 +19,6 @@ import {
 const Login = () => {
   const [username, setUsername] = useState(def_user);
   const [password, setPassword] = useState(def_pass);
-  const [visible, setVisible] = useState(false);
 
   const dispatch = useDispatch();
   let history = useHistory();
@@ -35,8 +32,7 @@ const Login = () => {
   }
 
   const doLogin = async() => {
-    setVisible(false)
-    Loading(true)
+    Loading(true);
     let logged = await authUser(username,password);
     if(logged === true){
       const userInfo = getUser();
@@ -45,7 +41,6 @@ const Login = () => {
       handleRedirect(routes.contact.list);
     }
     Loading(false)
-
     return false
   }
 
@@ -89,12 +84,6 @@ const Login = () => {
               </Grid>
             </Grid>
           </Grid>
-
-         <MyDiv open={visible}>
-            <Grid item xs={12}>
-              <MyAlert severity={"error"}>{lang.login_error_lb}</MyAlert>
-            </Grid>
-         </MyDiv>
 
           <Grid item xs={12}>
             <Link href="#" variant="body2">{lang.forgotpass_btn}</Link>

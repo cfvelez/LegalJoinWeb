@@ -5,6 +5,7 @@ import {Inbox,Drafts} from '@material-ui/icons/';
 import MyMenuItemLink from '../MyMenuItemLink'
 import MyMenuStyle from './MyMenuStyle'
 import routes from '../../app/routing/routes'
+import menuTxt from '../../constants/txt/menuTxt';
 
 export default function MyMenu(props) {
   const styles = MyMenuStyle();
@@ -23,7 +24,7 @@ export default function MyMenu(props) {
           to={login}
           onClick={() => handleItemClick(login)}
           icon={<Inbox />}
-          text="Inbox"
+          text={menuTxt.contacts}
           selected = {selected === login ? true : false}
         />
         <MyMenuItemLink

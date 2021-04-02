@@ -2,7 +2,7 @@ import React from 'react'
 import MyDivStyle from './MyDivStyle'
 
 const MyDiv = (props) => {
-  const style = MyDivStyle()
+  const style = MyDivStyle();
   return (<div className={props.open ? style.visible : style.hidden} >{props.children}</div>)
 }
 

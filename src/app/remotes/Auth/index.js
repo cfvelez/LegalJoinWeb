@@ -1,26 +1,32 @@
 
 import login from './mock';
 import User from '../../domains/User'
-import axios from 'axios';
-import store from '../../../redux/store'
-import {set_token} from '../../../redux/actions/token'
-import {SERVER} from '../../../constants/'
+import httpClient from '../httpClient';
+import store from '../../../redux/store';
+import {set_token} from '../../../redux/actions/token';
+import {showNotification, hideNotification} from '../../../utils/AppBehaviour';
 
 export const getUser = () => {
    const {first_name,last_name,email,phone_number} = login.userData;
    return new User(first_name,last_name,email,phone_number);
 }
 
-export const authUser = async(user, password) =>{;
- return axios.post(`${SERVER}/login_check`, {
-    username: user,
-    password: password
-  })
+export const authUser = async(user, password) =>{
+ var http = new httpClient();
+ var info = {username: user, password: password};
+ hideNotification();
+ return http.axios.post('/login_check', info)
   .then((data) => {
     setToken(data.data);
     return true
   })
-  .catch(() => false );
+  .catch((e) =>{
+    let resp = e.response.data;
+    let message = resp && resp.hasOwnProperty('message') ? resp.message : 'Opps! error!.';
+    showNotification('error',message);
+    return false;
+  }
+  );
 }
 
 export const setToken = (jwtoken) =>{

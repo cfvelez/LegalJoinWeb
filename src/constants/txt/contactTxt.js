@@ -1,7 +1,8 @@
 const contactTxt = {
   title : 'Contacto',
   name : 'Nombre',
-  lastName : 'Apellido'
+  lastName : 'Apellido',
+  success : 'Contacto agregado correctamente'
 }
 
 export default contactTxt

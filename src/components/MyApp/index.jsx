@@ -4,6 +4,7 @@ import MyAppBar from '../MyAppBar'
 import MyMenu from '../MyMenu'
 import MyDrawer from '../MyDrawer'
 import MyContainer from '../MyContainer'
+import MyAlert from '../MyAlert';
 import RoutingSystem from '../../app/routing/'
 import {useSelector} from 'react-redux'
 import {changeDestination} from '../../utils/AppBehaviour'
@@ -30,7 +31,10 @@ const MyApp = () => {
           <MyDrawer open={open && isAuthorized} onClick={()=>setOpen(false)}>
              <MyMenu onClick = {(path) => handleClickMenuItem(path)}/>
           </MyDrawer>
-        <MyContainer open={open && isAuthorized} loading={status.loading}> <RoutingSystem user = {user}/></MyContainer>
+        <MyContainer open={open && isAuthorized} loading={status.loading}>
+          <MyAlert visible={status.notification.visible} severity={status.notification.type} >{status.notification.message}</MyAlert>
+          <RoutingSystem user = {user}/>
+        </MyContainer>
       </BrowserRouter>
     </div>
   )

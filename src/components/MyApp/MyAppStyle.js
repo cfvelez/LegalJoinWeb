@@ -2,7 +2,7 @@ import {makeStyles} from '@material-ui/core'
 
 const MyAppStyle = makeStyles({
   root: {
-    display: 'flex',
+    display: 'flex'
   }
 })
 
