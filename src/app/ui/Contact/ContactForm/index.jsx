@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import {Grid,Typography,TextField,Button} from '@material-ui/core'
 import MyButton from '../../../../components/MyButton'
 import MyPaper from '../../../../components/MyPaper'
@@ -11,20 +11,27 @@ import {Loading,
         hideNotification} from '../../../../utils/AppBehaviour'
 import routes from '../../../routing/routes'
 
-import {useHistory} from "react-router-dom";
+import {useHistory,useParams} from "react-router-dom";
 
 const ContactForm = () => {
+  let { id } = useParams();
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const history = useHistory();
 
   const Save = async ()=> {
-    let contact = new Contact(null, name, lastName);
     hideNotification();
     Loading(true);
-    const resp = await contact.create();
-    if(resp === true){
-      clearForm();
+
+    if(id){
+      let contact = new Contact(id, name, lastName);
+      await contact.update();
+    }
+    else{
+      let contact = new Contact(null, name, lastName);
+      const resp = await contact.create();
+      if(resp === true)
+          clearForm();
     }
     Loading(false);
   }
@@ -40,6 +47,18 @@ const ContactForm = () => {
     changeDestination(routes.contact.list);
     history.replace(routes.contact.list);
  }
+  useEffect(() => {
+    if(id){
+      (async () => {
+        let data = await Contact.getById(id);
+        setName(data.name);
+        setLastName(data.lastname);
+        return false;
+      })();
+    }
+
+  }, []);
+
 
   return (
     <MyPaper customWidth={'60%'}>

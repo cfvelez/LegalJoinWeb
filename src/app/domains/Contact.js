@@ -1,14 +1,10 @@
-import {create, update, remove} from '../remotes/Contact'
+import {create, update, remove, get} from '../remotes/Contact'
 export default class Contact {
 
-  constructor (id, first_name, last_name) {
+  constructor (id, name, lastName) {
     this.id = id;
-    this.first_name = first_name;
-    this.last_name = last_name;
-  }
-
-  sayHello() {
-   return 'Hello';
+    this.name = name;
+    this.lastName = lastName;
   }
 
   create(){
@@ -16,10 +12,16 @@ export default class Contact {
   }
 
   update(){
-    return update();
+    return update(this);
   }
 
   delete(){
-    return remove();
+    return remove(this.id);
   }
+
+  static async getById(id){
+    return await get(id);
+  }
+
+
 }

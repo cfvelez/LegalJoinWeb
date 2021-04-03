@@ -16,23 +16,24 @@ export default function MyMenu(props) {
     setSelected(route)
   }
   const login = routes.login.login;
+  const contacts = routes.contact.list;
   const home = routes.home.root;
   return (
     <div className={styles.root}>
       <List component="nav" aria-label="main mailbox folders">
         <MyMenuItemLink
-          to={login}
-          onClick={() => handleItemClick(login)}
+          to={contacts}
+          onClick={() => handleItemClick(contacts)}
           icon={<Inbox />}
           text={menuTxt.contacts}
-          selected = {selected === login ? true : false}
+          selected = {selected === contacts ? true : false}
         />
         <MyMenuItemLink
-          to={home}
-          onClick={() => handleItemClick(home)}
+          to={login}
+          onClick={() => handleItemClick(login)}
           icon={<Drafts />}
           text="Drafts"
-          selected = {selected === home ? true : false}
+          selected = {selected === login ? true : false}
         />
       </List>
       <Divider />

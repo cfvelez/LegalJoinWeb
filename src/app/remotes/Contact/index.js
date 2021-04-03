@@ -4,7 +4,7 @@ import contactTxt from '../../../constants/txt/contactTxt'
 
 export const create = async(contact) =>{
   var http = new httpClient();
-  var info = { name: contact.first_name,lastname: contact.last_name};
+  var info = { name: contact.name,lastname: contact.lastName};
   http.setToken();
   return http.axios.post('/contact',info)
     .then(() => {
@@ -12,7 +12,7 @@ export const create = async(contact) =>{
       return true
     })
     .catch((e) =>{
-      showNotification('success',e.message);
+      showNotification('error',e.message);
       return false;
     } );
   }
@@ -20,13 +20,35 @@ export const all = async() =>{
   var http = new httpClient();
   http.setToken();
   return http.axios.get('/contact')
-      .then(() => {
-        return true
-    }).catch((e) =>{ console.log(e); return false; });
+      .then((response) => response.data).catch((e) =>{ console.log(e); return []; });
   }
 
-export const update = ()=> {
-  return "Update";
+export const update = (contact)=> {
+  var http = new httpClient();
+  var info = { name: contact.name,lastname: contact.lastName};
+  http.setToken();
+  return http.axios.post(`/contact/${contact.id}`,info)
+    .then(() => {
+      showNotification('success',contactTxt.updated);
+      return true
+    })
+    .catch((e) =>{
+      showNotification('error',e.message);
+      return false;
+    } );
+}
+
+export const get = (id)=> {
+  var http = new httpClient();
+  http.setToken();
+  return http.axios.get(`/contact/${id}`)
+    .then((response) => {
+      return response.data
+    })
+    .catch((e) =>{
+      showNotification('error',e.message);
+      return false;
+    } );
 }
 
 export const remove = ()=> {
