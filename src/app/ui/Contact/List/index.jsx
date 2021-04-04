@@ -2,9 +2,11 @@ import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import {all} from '../../../../app/remotes/Contact/';
 import routes from '../../../routing/routes';
-import {customHandledRedirect} from "../../../../utils/AppBehaviour";
-import MyEditButton from '../../../../components/MyEditButton'
-import MyDeleteButton from '../../../../components/MyDeleteButton'
+import {changeDestination} from "../../../../utils/AppBehaviour";
+import MyEditButton from '../../../../components/MyEditButton';
+import Contact from '../../../domains/Contact'
+import MyDeleteButton from '../../../../components/MyDeleteButton';
+import {useHistory} from "react-router-dom";
 
 const loadServerRows  = async(page) => {
   return await all();
@@ -12,11 +14,8 @@ const loadServerRows  = async(page) => {
 }
 
 /**
-   * Config
+   * colAction - Config custom columns
    */
- const editAction = (id) => customHandledRedirect(routes.contact.edit.replace(':id' , id ));
-
-
  const colAction = (field, headerName, action ) => {
      return {
          field: field,
@@ -31,25 +30,47 @@ const loadServerRows  = async(page) => {
      };
    }
 
- const columns = [
-     {field: "id", hide: true},
-     {field: "name", headerName: "Nombre", width:100},
-     {field: "lastname", headerName: "Apellidos", width:100},
-     colAction('edit', 'Editar', (id)=>editAction(id)),
-     colAction('delete', 'Borrar', (p)=>alert('Borrar:' + p))
- ];
-
- const myData = {'columns': columns , 'rows':[]};
+ /**
+  * End - Config
+  */
 
 const ContactList = () => {
   /**
-   * Render data
+   * States data
    */
-
-  let data = myData;
+  let history = useHistory();
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+
+  const editAction = (id) => {
+     let destiny = routes.contact.edit.replace(':id' , id );
+     changeDestination(destiny);
+     history.replace(destiny);
+  };
+
+  const deleteAction = async (id) => {
+    setLoading(true);
+    let result = await Contact.remove(id);
+    if( result === true){
+      const newRows = await loadServerRows(page);
+      setRows(newRows);
+    }
+    setLoading(false);
+  }
+
+  const myGridSetup = () => {
+    const columns = [
+      {field: "id", hide: true},
+      {field: "name", headerName: "Nombre", width:100},
+      {field: "lastname", headerName: "Apellidos", width:100},
+      colAction('edit', 'Editar', (id)=>editAction(id)),
+      colAction('delete', 'Borrar', (id)=>deleteAction(id))
+    ];
+    return {'columns': columns , 'rows':[]}
+  }
+
+  let data = myGridSetup();
 
   const handlePageChange = (params) => {
     setPage(params.page);
@@ -73,7 +94,7 @@ const ContactList = () => {
     return () => {
       active = false;
     };
-  }, [page, data]);
+  }, [page]);
 
   return (
     <div style={{ height: 400, width: '50%'}}>

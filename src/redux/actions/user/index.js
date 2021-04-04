@@ -1,4 +1,4 @@
-import {UPDATE_USER} from '../../types/user/'
+import {UPDATE_USER , LOGOUT_USER} from '../../types/user/'
 
 export const update_user = (data) => {
  return{
@@ -6,3 +6,10 @@ export const update_user = (data) => {
       payload:data
     }
 }
+
+export const logout_user = () => {
+  return{
+       type: LOGOUT_USER,
+       payload: null
+     }
+ }

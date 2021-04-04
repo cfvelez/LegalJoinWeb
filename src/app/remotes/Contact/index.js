@@ -51,6 +51,13 @@ export const get = (id)=> {
     } );
 }
 
-export const remove = ()=> {
-  return "Delete";
+export const remove = (id)=> {
+  var http = new httpClient();
+  http.setToken();
+  return http.axios.delete(`/contact/${id}`)
+  .then(() => true)
+  .catch((e) =>{
+    showNotification('error',e.message);
+    return false;
+  } );
 }

@@ -1,4 +1,4 @@
-import {logOut} from '../remotes/Auth'
+import {logOut} from '../../utils/AppBehaviour'
 export default class User {
 
   constructor (first_name, last_name, email, phone_number) {
@@ -12,7 +12,7 @@ export default class User {
    return 'Hello'
   }
 
-  logOut(){
+  static logOut(){
     return logOut()
   }
 

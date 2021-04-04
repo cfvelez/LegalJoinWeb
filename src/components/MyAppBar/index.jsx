@@ -6,11 +6,9 @@ import {BRAND_NAME} from '../../constants'
 import {Link as RouterLink} from "react-router-dom";
 import routes from '../../app/routing/routes'
 import clsx from 'clsx';
-import {useDispatch} from 'react-redux'
-import {update_user} from '../../redux/actions/user'
+import User from '../../app/domains/User'
 
 const MyAppBar = (props) => {
-  const dispatch = useDispatch();
   const closeBtnAction = () => {
    return doLogOut() ? props.onClickForNavigate(routes.login.login) : false;
   }
@@ -22,7 +20,7 @@ const MyAppBar = (props) => {
 
   const doLogOut = () => {
     if(props.isAuthorized === true){
-      return props.user.logOut() ? dispatch(update_user(null)) : false;
+      User.logOut();
     }
     return false
   }

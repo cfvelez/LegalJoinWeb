@@ -15,8 +15,8 @@ export default class Contact {
     return update(this);
   }
 
-  delete(){
-    return remove(this.id);
+  static async remove(id){
+    return remove(id);
   }
 
   static async getById(id){

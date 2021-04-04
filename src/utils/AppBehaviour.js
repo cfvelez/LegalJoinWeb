@@ -1,7 +1,9 @@
 
-import store from '../redux/store'
-import {set_loadingMode, send_notification} from '../redux/actions/system'
-import {push_route} from '../redux/actions/navigation'
+import store from '../redux/store';
+import {set_loadingMode, send_notification} from '../redux/actions/system';
+import {push_route} from '../redux/actions/navigation';
+import {logout_user} from '../redux/actions/user';
+import {set_token} from '../redux/actions/token';
 
 export const Loading = (isLoading) => {
   store.dispatch(set_loadingMode({'loading':isLoading}));
@@ -39,13 +41,17 @@ export const saveState = () => {
   }
 };
 
-
-
 export const customHandledRedirect = (url) =>{
   changeDestination(url);
   saveState();
   window.history.pushState("", "", url);
   window.history.go();
 };
+
+export const logOut = () =>{
+  store.dispatch(logout_user());
+  store.dispatch(set_token(null))
+  saveState();
+}
 
 

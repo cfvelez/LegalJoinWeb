@@ -6,7 +6,7 @@ import MyDeleteButtonStyle from './MyDeleteButtonStyle'
 const MyDeleteButton = (props) => {
   const style = MyDeleteButtonStyle()
   return (
-    <IconButton aria-label="delete" color="secundary" className={style.position} onClick={props.onClick}>
+    <IconButton aria-label="delete" color="primary" className={style.position} onClick={props.onClick}>
       <DeleteIcon/>
     </IconButton>
       );

@@ -4,6 +4,7 @@ import User from '../../domains/User'
 import httpClient from '../httpClient';
 import store from '../../../redux/store';
 import {set_token} from '../../../redux/actions/token';
+import {logout_user} from '../../../redux/actions/user';
 import {showNotification, hideNotification} from '../../../utils/AppBehaviour';
 
 export const getUser = () => {
@@ -34,6 +35,6 @@ export const setToken = (jwtoken) =>{
 }
 
 export const logOut = () =>{
-  return true;
+  store.dispatch(logout_user());
 }
 
