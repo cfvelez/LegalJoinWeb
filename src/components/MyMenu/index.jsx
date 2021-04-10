@@ -15,9 +15,9 @@ export default function MyMenu(props) {
     props.onClick(route)
     setSelected(route)
   }
-  const login = routes.login.login;
   const contacts = routes.contact.list;
   const home = routes.home.root;
+  const record = routes.recorder.test;
   return (
     <div className={styles.root}>
       <List component="nav" aria-label="main mailbox folders">
@@ -29,11 +29,11 @@ export default function MyMenu(props) {
           selected = {selected === contacts ? true : false}
         />
         <MyMenuItemLink
-          to={login}
-          onClick={() => handleItemClick(login)}
+          to={record}
+          onClick={() => handleItemClick(record)}
           icon={<Drafts />}
-          text="Drafts"
-          selected = {selected === login ? true : false}
+          text="Record"
+          selected = {selected ===  record ? true : false}
         />
       </List>
       <Divider />

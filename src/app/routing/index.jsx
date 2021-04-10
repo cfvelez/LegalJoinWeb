@@ -3,6 +3,7 @@ import Home from '../ui/Home'
 import Login from '../ui/Login'
 import ContactForm from '../ui/Contact/ContactForm'
 import ContactList from '../ui/Contact/List'
+import VoiceRecorder from '../ui/VoiceRecorder'
 import PublicRoute from './Routes/PublicRoute'
 import PrivateRoute from './Routes/PrivateRoute'
 import {
@@ -19,6 +20,7 @@ const RoutingSystem = (props) => {
       <PrivateRoute component={ContactList} user={props.user} path={routes.contact.list} exact />
       <PrivateRoute component={ContactForm} user={props.user} path={routes.contact.new} exact />
       <PrivateRoute component={ContactForm} user={props.user} path={routes.contact.edit} exact />
+      <PrivateRoute component={VoiceRecorder} user={props.user} path={routes.recorder.test} exact />
       <Route>
         <Login/>
       </Route>

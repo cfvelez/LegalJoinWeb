@@ -4,6 +4,7 @@ import {set_loadingMode, send_notification} from '../redux/actions/system';
 import {push_route} from '../redux/actions/navigation';
 import {logout_user} from '../redux/actions/user';
 import {set_token} from '../redux/actions/token';
+import routes from '../app/routing/routes'
 
 export const Loading = (isLoading) => {
   store.dispatch(set_loadingMode({'loading':isLoading}));
@@ -52,6 +53,16 @@ export const logOut = () =>{
   store.dispatch(logout_user());
   store.dispatch(set_token(null))
   saveState();
+}
+
+export const getAddRoute = () =>{
+  const {navigation} = store.getState();
+  let presentScreen = false;
+
+  if(navigation == routes.contact.list)
+    presentScreen = routes.contact.new;
+
+  return presentScreen;
 }
 
 

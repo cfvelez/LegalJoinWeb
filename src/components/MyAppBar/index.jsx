@@ -1,19 +1,28 @@
 import React from 'react'
 import MyAppBarStyle from './MyAppBarStyle'
 import {AppBar, Toolbar, Typography, IconButton} from '@material-ui/core'
-import {ExitToApp,AccountCircle,Menu} from '@material-ui/icons/';
+import {ExitToApp,AccountCircle,Menu,Add} from '@material-ui/icons/';
 import {BRAND_NAME} from '../../constants'
-import {Link as RouterLink} from "react-router-dom";
+import {Link as RouterLink, useHistory} from "react-router-dom";
 import routes from '../../app/routing/routes'
 import clsx from 'clsx';
 import User from '../../app/domains/User'
+import {getAddRoute} from '../../utils/AppBehaviour';
 
 const MyAppBar = (props) => {
+  let history = useHistory();
+
   const closeBtnAction = () => {
    return doLogOut() ? props.onClickForNavigate(routes.login.login) : false;
   }
+
+  const addBtnAction = (route) => {
+    if(props.onClickForNavigate(route)){
+      history.replace(route);
+    }
+  }
+
   const accountBtnAction = () => {
-    console.log('settings...')
     props.onClickForNavigate(routes.home.root)
     return true;
   }
@@ -25,10 +34,19 @@ const MyAppBar = (props) => {
     return false
   }
   const ShowOptions = (props) =>{
-    let options = <></>;
+    const presentScreen = getAddRoute();
+    let options = <></>
     if(props.visible === true){
-      options =
+       options =
             (<>
+               {presentScreen &&
+                <IconButton
+                  color="inherit"
+                  aria-label="new"
+                  onClick= {() => addBtnAction(presentScreen)}>
+                  <Add />
+                  </IconButton>
+              }
               <IconButton
                   color="inherit"
                   aria-label="account"
