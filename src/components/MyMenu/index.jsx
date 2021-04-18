@@ -1,7 +1,7 @@
 
 import React, {useState} from 'react';
 import {List,ListItem,ListItemText,Divider} from '@material-ui/core/';
-import {Inbox,Drafts} from '@material-ui/icons/';
+import {Inbox,Voicemail} from '@material-ui/icons/';
 import MyMenuItemLink from '../MyMenuItemLink'
 import MyMenuStyle from './MyMenuStyle'
 import routes from '../../app/routing/routes'
@@ -31,8 +31,8 @@ export default function MyMenu(props) {
         <MyMenuItemLink
           to={record}
           onClick={() => handleItemClick(record)}
-          icon={<Drafts />}
-          text="Record"
+          icon={<Voicemail />}
+          text={menuTxt.recordings}
           selected = {selected ===  record ? true : false}
         />
       </List>

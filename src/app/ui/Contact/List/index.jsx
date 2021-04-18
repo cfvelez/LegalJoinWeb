@@ -62,8 +62,8 @@ const ContactList = () => {
   const myGridSetup = () => {
     const columns = [
       {field: "id", hide: true},
-      {field: "name", headerName: "Nombre", width:100},
-      {field: "lastname", headerName: "Apellidos", width:100},
+      {field: "name", headerName: "Nombre", width:150},
+      {field: "lastname", headerName: "Apellidos", width:150},
       colAction('edit', 'Editar', (id)=>editAction(id)),
       colAction('delete', 'Borrar', (id)=>deleteAction(id))
     ];
@@ -86,7 +86,6 @@ const ContactList = () => {
       if (!active) {
         return;
       }
-
       setRows(newRows);
       setLoading(false);
     })();

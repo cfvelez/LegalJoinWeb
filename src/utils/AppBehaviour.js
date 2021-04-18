@@ -1,4 +1,5 @@
-
+import {useEffect,useState} from 'react'
+import moment from 'moment';
 import store from '../redux/store';
 import {set_loadingMode, send_notification} from '../redux/actions/system';
 import {push_route} from '../redux/actions/navigation';
@@ -64,5 +65,27 @@ export const getAddRoute = () =>{
 
   return presentScreen;
 }
+
+/* Custom Hook Sample */
+export const useTimeCounter = (startTime) => {
+  const [timeLabel, setTimeLabel] = useState(0);
+
+      useEffect(() => {
+        const timer = setInterval(() => {
+            let endTime = moment();
+            let seconds = Math.ceil(moment.duration(endTime.diff(startTime)).as('seconds'));
+            setTimeLabel(seconds);
+        }, 1000);
+
+        return () => {
+          clearInterval(timer);
+        }
+
+        },[]);
+
+  return timeLabel;
+};
+
+
 
 
