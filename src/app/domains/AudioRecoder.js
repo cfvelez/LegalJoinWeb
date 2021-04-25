@@ -1,21 +1,61 @@
 
 import { useEffect, useState } from "react";
+import moment from 'moment';
 
-export const useMyRecoder = () => {
-  const [mediaRecorder, setMediaRecorder]  = useState(false);
+const recordAudio = () =>{
 
-  useEffect(() => {
-    navigator.getUserMedia({ audio: true },(stream) => {
-      console.log('Permission Granted');
-      setMediaRecorder(new MediaRecorder(stream));
-    },
-    () => {
-      console.log('Permission Denied');
-    },);
+   return(
+        new Promise(async resolve => {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const mediaRecorder = new MediaRecorder(stream);
+        let audioChunks = [];
+
+        mediaRecorder.addEventListener("dataavailable", event => {
+          audioChunks.push(event.data);
+        });
+
+        const start = () =>  mediaRecorder.start();
+
+        const pause = () => mediaRecorder.pause() ;
+
+        const resume = () => mediaRecorder.resume();
+
+        const getState = () => mediaRecorder.state;
+
+        const stop = () =>
+
+          new Promise(resolve => {
+            mediaRecorder.addEventListener("stop", () => {
+              const audioBlob = new Blob(audioChunks);
+              const audioUrl = URL.createObjectURL(audioBlob);
+              const audio = new Audio(audioUrl);
+              const play = () => audio.play();
+              resolve({ audioBlob, audioUrl, play });
+
+            });
+            mediaRecorder.stop();
+            audioChunks = [];
+          });
+
+        const name =  moment().format('MMMM Do YYYY, h:mm:ss a');
+
+        resolve({ start, stop, pause, resume, getState, name });
+      }));
+}
+
+export const useRecorder = () =>{
+  const [recorderSystem, setRecorderSystem] = useState(null);
+
+  useEffect( () =>{
+    let buildRecorder = async () =>{
+      const recorder = await recordAudio();
+      setRecorderSystem(recorder);
+    }
+    buildRecorder();
   },[]);
 
-  return mediaRecorder;
-};
+  return recorderSystem;
+}
 
 export const timeToTextConverter = (time) => {
   let hours = Math.floor((time / (60 * 60)));

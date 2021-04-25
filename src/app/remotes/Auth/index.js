@@ -21,8 +21,9 @@ export const authUser = async(user, password) =>{
     return true
   })
   .catch((e) =>{
-    let resp = e.response.data;
-    let message = resp && resp.hasOwnProperty('message') ? resp.message : 'Opps! error!.';
+    let resp = e.hasOwnProperty('response') ? e.response : null;
+    let data = resp && resp.hasOwnProperty('data') ? resp.data : null;
+    let message = data && data.hasOwnProperty('message') ? resp.message : 'Opps! error!.';
     showNotification('error',message);
     return false;
   }
