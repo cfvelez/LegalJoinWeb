@@ -57,7 +57,9 @@ export const useRecorder = () =>{
   return recorderSystem;
 }
 
-export const timeToTextConverter = (time) => {
+export const timeToTextConverter = (parts) => {
+  let time = 0;
+  Object.entries(parts).forEach( ([key, value]) => time = time + value );
   let hours = Math.floor((time / (60 * 60)));
   let minutes = Math.floor((time / 60));
   let seconds = Math.floor((time % 60));

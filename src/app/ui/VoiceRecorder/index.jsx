@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react'
+import React, {useEffect,useState,useRef} from 'react'
 import {timeToTextConverter,useRecorder} from '../../domains/AudioRecoder'
 import {Typography,Container} from '@material-ui/core'
 import RecordPanel from '../../../components/RecordPanel'
@@ -7,15 +7,17 @@ import moment from 'moment';
 const VoiceRecorder = () => {
   const [recording, setRecording] = useState(false);
   const [startTime, setStartTime] = useState(moment());
+  const [resumeTime, setResumeTime] = useState(false);
   const [timeLabel, setTimeLabel] = useState('00:00:00');
   const recordAudio = useRecorder(null);
   const [recorderState, setRecorderState] = useState('');
+  const section = useRef(0);
+  const timeElapsed = useRef({});
 
   const setState = () => {
     let state = 'notAllowed';
     if(recordAudio){
       state = recordAudio.getState();
-      console.log(state);
     }
     setRecorderState(state)
   }
@@ -26,7 +28,6 @@ const VoiceRecorder = () => {
       setStartTime(moment());
       setTimeLabel('00:00:01');
       recordAudio.start();
-      console.log(recordAudio.getState());
       setState();
     }
   }
@@ -43,17 +44,22 @@ const VoiceRecorder = () => {
     if(recorderState === 'paused'){
       recordAudio.resume();
       setRecording(true);
+      setResumeTime(moment());
       setState();
+      section.current = section.current + 1;
     }
  }
 
   const onStop = async () =>  {
     if(recorderState === 'recording' || recorderState === 'paused' ){
       const audio = await recordAudio.stop();
-      audio.play();
       setState();
       setRecording(false);
       setTimeLabel('00:00:00');
+      setResumeTime(false);
+      section.current = 0;
+      timeElapsed.current = {};
+      audio.play();
     }
   }
 
@@ -61,14 +67,28 @@ const VoiceRecorder = () => {
       if(recording){
         const timer = setInterval(() => {
             let endTime = moment();
-            let seconds = Math.ceil(moment.duration(endTime.diff(startTime)).as('seconds'));
-            setTimeLabel(timeToTextConverter(seconds));
+            let seconds = 0
+
+            if(resumeTime){
+              seconds = Math.ceil(moment.duration(endTime.diff(resumeTime)).as('seconds'));
+            }
+            else{
+              seconds = Math.ceil(moment.duration(endTime.diff(startTime)).as('seconds'));
+            }
+
+            let temp = timeElapsed.current
+            temp[section.current] = seconds;
+            timeElapsed.current = temp;
+            setTimeLabel(timeToTextConverter(timeElapsed.current));
+
         }, 1000);
 
         return () => {
           clearInterval(timer);
         }
+
       }
+
     },[recording]);
 
     useEffect(() => {
