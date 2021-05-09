@@ -30,16 +30,15 @@ const recordAudio = () =>{
               const audioUrl = URL.createObjectURL(audioBlob);
               const audio = new Audio(audioUrl);
               const play = () => audio.play();
-              resolve({ audioBlob, audioUrl, play });
+              let name = moment().format('MMMM_D_YYYY_h:mm:ss_a');
+              resolve({ audioBlob, audioUrl, play, name });
 
             });
             mediaRecorder.stop();
             audioChunks = [];
           });
 
-        const name =  moment().format('MMMM Do YYYY, h:mm:ss a');
-
-        resolve({ start, stop, pause, resume, getState, name });
+        resolve({ start, stop, pause, resume, getState });
       }));
 }
 

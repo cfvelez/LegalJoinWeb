@@ -2,7 +2,8 @@ import {makeStyles} from '@material-ui/core'
 
 const recordPanelStyle = makeStyles(({
   position: {
-    display:'block'
+    display:'block',
+    flexGrow: 1
   },
 }))
 

@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+div.rhap_container, .rhap_container *:focus {
+  outline: none;
+}
+
+div.rhap_container {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0;
+  box-shadow: none;
+}
+
+.rhap_time{
+  color: rgba(0, 0, 0, 0)
+}

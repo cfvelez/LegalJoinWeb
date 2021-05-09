@@ -1,7 +1,8 @@
 import React, {useEffect,useState,useRef} from 'react'
 import {timeToTextConverter,useRecorder} from '../../domains/AudioRecoder'
-import {Typography,Container} from '@material-ui/core'
+import {Container} from '@material-ui/core'
 import RecordPanel from '../../../components/RecordPanel'
+import MyAudioControl from '../../../components/MyAudioControl'
 import moment from 'moment';
 
 const VoiceRecorder = () => {
@@ -13,6 +14,7 @@ const VoiceRecorder = () => {
   const [recorderState, setRecorderState] = useState('');
   const section = useRef(0);
   const timeElapsed = useRef({});
+  const [sources, setSources] = useState([]);
 
   const setState = () => {
     let state = 'notAllowed';
@@ -52,15 +54,29 @@ const VoiceRecorder = () => {
 
   const onStop = async () =>  {
     if(recorderState === 'recording' || recorderState === 'paused' ){
-      const audio = await recordAudio.stop();
-      setState();
-      setRecording(false);
+      const  {audioUrl, name} = await recordAudio.stop();
       setTimeLabel('00:00:00');
       setResumeTime(false);
       section.current = 0;
       timeElapsed.current = {};
-      audio.play();
+      addSource(audioUrl, name)
     }
+  }
+
+  const addSource = (url, title) =>{
+    let temp = sources
+    let obj = {'url':url, 'title': title}
+    temp.push(obj);
+    setSources(temp);
+    setState();
+    setRecording(false);
+  }
+
+  const showControls = () =>{
+    /*sources.map( (obj) => console.log(obj.title));*/
+    sources.map( (obj,i) => console.log(i));
+
+    return sources.map( (obj) => <MyAudioControl key={obj.title} url = {obj.url} name = {obj.title}/>);
   }
 
   useEffect(() => {
@@ -70,7 +86,7 @@ const VoiceRecorder = () => {
             let seconds = 0
 
             if(resumeTime){
-              seconds = Math.ceil(moment.duration(endTime.diff(resumeTime)).as('seconds'));
+                seconds = Math.ceil(moment.duration(endTime.diff(resumeTime)).as('seconds'));
             }
             else{
               seconds = Math.ceil(moment.duration(endTime.diff(startTime)).as('seconds'));
@@ -86,28 +102,25 @@ const VoiceRecorder = () => {
         return () => {
           clearInterval(timer);
         }
-
       }
-
     },[recording]);
 
     useEffect(() => {
       setState();
-    },[recordAudio]);
+
+    },[recordAudio,sources]);
 
   return (
     <Container>
-      <Typography paragraph>
-          Hola!!! vamos a grabar audios!!!
-      </Typography>
       <RecordPanel
-                  recorderState={recorderState}
-                  timeLabel={timeLabel}
-                  onStart={onStart}
-                  onStop={onStop}
-                  onPause={onPause}
-                  onResume={onResume}
-                />
+          recorderState={recorderState}
+          timeLabel={timeLabel}
+          onStart={onStart}
+          onStop={onStop}
+          onPause={onPause}
+          onResume={onResume}
+        />
+    {showControls()}
     </Container>
   )
 }
