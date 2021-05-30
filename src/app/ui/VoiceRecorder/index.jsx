@@ -54,13 +54,28 @@ const VoiceRecorder = () => {
 
   const onStop = async () =>  {
     if(recorderState === 'recording' || recorderState === 'paused' ){
-      const  {audioUrl, name} = await recordAudio.stop();
+      const  {audioUrl,audioBlob ,name} = await recordAudio.stop();
+      console.log('audioBlob:',audioBlob);
+      await convertToBase64(audioBlob);
       setTimeLabel('00:00:00');
       setResumeTime(false);
       section.current = 0;
       timeElapsed.current = {};
       addSource(audioUrl, name)
     }
+  }
+  const convertToBase64 = (blob) =>{
+    var reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = function () {
+    var base64String = reader.result;
+    console.log('Base64 String - ', base64String);
+
+    // Simply Print the Base64 Encoded String,
+    // without additional data: Attributes.
+    console.log('Base64 String without Tags: ',
+      base64String.substr(base64String.indexOf(', ') + 1));
+   }
   }
 
   const addSource = (url, title) =>{
@@ -73,9 +88,6 @@ const VoiceRecorder = () => {
   }
 
   const showControls = () =>{
-    /*sources.map( (obj) => console.log(obj.title));*/
-    sources.map( (obj,i) => console.log(i));
-
     return sources.map( (obj) => <MyAudioControl key={obj.title} url = {obj.url} name = {obj.title}/>);
   }
 
