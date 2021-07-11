@@ -90,7 +90,7 @@ const ContactForm = () => {
           </Grid>
         </Grid>
         <MyDivider/>
-        <Grid container spacing={2} direction="row" justify="space-between" align="center">
+        <Grid container spacing={2} direction="row" justifyContent="space-between" align="center">
           <Grid item xs={6} >
             <Button variante="outlined" color="secondary" onClick={()=> Cancel()}>{lang.cancel}</Button>
           </Grid>

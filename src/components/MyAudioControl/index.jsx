@@ -11,7 +11,7 @@ const MyAudioControl = (props) => {
   return (
     <div className={style.margin}>
 
-    <Grid container justify="center" alignItems="center">
+    <Grid container justifyContent="center" alignItems="center">
       <Grid item xs={8}>
         <AudioPlayer
           customAdditionalControls={[]}

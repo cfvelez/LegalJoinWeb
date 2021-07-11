@@ -46,7 +46,7 @@ const Login = () => {
 
   return (
     <MyPaper customWidth={'40%'}>
-        <Grid container spacing={4} direction="column" alignItems="center" justify="center">
+        <Grid container spacing={4} direction="column" alignItems="center" justifyContent="center">
           <Grid item xs={12}>
             <Typography variant="h5">{lang.login_lb}</Typography>
           </Grid>
@@ -75,7 +75,7 @@ const Login = () => {
           </Grid>
 
           <Grid item xs={12} >
-            <Grid container direction="row" spacing={2} alignItems="center" justify="center">
+            <Grid container direction="row" spacing={2} alignItems="center" justifyContent="center">
               <Grid item xs={12} sm={6} >
                 <MyButton color="primary" onClick={()=> doLogin()}>{lang.login_btn}</MyButton>
               </Grid>

@@ -1,4 +1,4 @@
-import {create, update, remove, get} from '../remotes/Contact'
+import {create, update, remove, get, all} from '../remotes/Contact'
 export default class Contact {
 
   constructor (id, name, lastName) {
@@ -21,6 +21,10 @@ export default class Contact {
 
   static async getById(id){
     return await get(id);
+  }
+
+  static async getAll(){
+    return await all();
   }
 
 

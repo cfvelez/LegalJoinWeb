@@ -1,14 +1,14 @@
 import httpClient from '../httpClient';
 import {showNotification} from '../../../utils/AppBehaviour';
-import contactTxt from '../../../constants/txt/contactTxt'
+import storyTxt from '../../../constants/txt/storyTxt'
 
-export const create = async(contact) =>{
+export const create = async(story) =>{
   var http = new httpClient();
-  var info = { name: contact.name,lastname: contact.lastName};
+  var info = { contactId:story.contactId, title: story.title, description: story.description};
   http.setToken();
-  return http.axios.post('/contact',info)
+  return http.axios.post('/story',info)
     .then(() => {
-      showNotification('success',contactTxt.success);
+      showNotification('success',storyTxt.success);
       return true
     })
     .catch((e) =>{
@@ -16,21 +16,20 @@ export const create = async(contact) =>{
       return false;
     } );
   }
-
 export const all = async() =>{
   var http = new httpClient();
   http.setToken();
-  return http.axios.get('/contact')
+  return http.axios.get('/story')
       .then((response) => response.data).catch((e) =>{ console.log(e); return []; });
   }
 
-export const update = (contact)=> {
+export const update = (story)=> {
   var http = new httpClient();
-  var info = { name: contact.name,lastname: contact.lastName};
+  var info = { contactId: story.contactId, title: story.title, description: story.description};
   http.setToken();
-  return http.axios.post(`/contact/${contact.id}`,info)
+  return http.axios.post(`/story/${story.id}`,info)
     .then(() => {
-      showNotification('success',contactTxt.updated);
+      showNotification('success',storyTxt.updated);
       return true
     })
     .catch((e) =>{
@@ -42,7 +41,7 @@ export const update = (contact)=> {
 export const get = (id)=> {
   var http = new httpClient();
   http.setToken();
-  return http.axios.get(`/contact/${id}`)
+  return http.axios.get(`/story/${id}`)
     .then((response) => {
       return response.data
     })
@@ -55,7 +54,7 @@ export const get = (id)=> {
 export const remove = (id)=> {
   var http = new httpClient();
   http.setToken();
-  return http.axios.delete(`/contact/${id}`)
+  return http.axios.delete(`/story/${id}`)
   .then(() => true)
   .catch((e) =>{
     showNotification('error',e.message);

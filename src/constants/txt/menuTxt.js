@@ -1,6 +1,7 @@
 const menuTxt = {
   contacts : 'Contactos',
-  recordings : 'Grabaciones'
+  recordings : 'Grabaciones',
+  stories : 'Historias'
 }
 
 export default menuTxt
