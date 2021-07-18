@@ -1,5 +1,7 @@
 import React from 'react'
-import {Grid,Typography} from '@material-ui/core';
+import {Grid,Typography, IconButton} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import MyAudioControlStyle from './MyAudioControlStyle'
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
@@ -11,8 +13,8 @@ const MyAudioControl = (props) => {
   return (
     <div className={style.margin}>
 
-    <Grid container justifyContent="center" alignItems="center">
-      <Grid item xs={8}>
+    <Grid container alignContent='center'>
+      <Grid item xs={10}>
         <AudioPlayer
           customAdditionalControls={[]}
           customVolumeControls={[]}
@@ -20,9 +22,13 @@ const MyAudioControl = (props) => {
           src={props.url}
           // other props here
       />
+      <Typography align="center">{props.name}</Typography>
       </Grid>
-      <Grid item xs={4}>
-        <Typography align="center">{props.name}</Typography>
+      <Grid item xs={1} >
+          <IconButton aria-label="delete" color="secondary"><DeleteIcon /></IconButton>
+      </Grid>
+      <Grid item xs={1} >
+          <IconButton aria-label="upload" color="primary"><CloudUploadIcon /></IconButton>
       </Grid>
     </Grid>
 

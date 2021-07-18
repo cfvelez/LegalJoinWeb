@@ -45,8 +45,8 @@ const StoryForm = () => {
   const handleContactId = (option) => {
     let contactInfoItem = contactList.filter(item => buildContactInfo(item) === option)
 
-    let id = (contactInfoItem.length > 0 &&  contactInfoItem[0]?.id) ? contactInfoItem[0].id : -1;
-    setContactId(id);
+    let idC = (contactInfoItem.length > 0 &&  contactInfoItem[0]?.id) ? contactInfoItem[0].id : -1;
+    setContactId(idC);
   }
 
   const clearForm = () => {
@@ -58,8 +58,20 @@ const StoryForm = () => {
   const Cancel = ()=> {
     hideNotification();
     clearForm();
-    //changeDestination(routes.contact.list);
-    //history.replace(routes.contact.list);
+    changeDestination(routes.story.list);
+    history.replace(routes.story.list);
+ }
+
+ const findContact = (id) =>{
+
+    let mycontact = contactList.filter( item => {
+        return item.id === id;
+    })
+
+    if(Array.isArray(mycontact) && mycontact.length > 0){
+      return buildContactInfo(mycontact.pop());
+    }
+    return "";
  }
 
  useEffect(() => {
@@ -71,8 +83,8 @@ const StoryForm = () => {
                                   return {...item,title }
   });
 
-    if(contacts.length > 0)
-      setContactList(contacts)
+  if(contacts.length > 0)
+    setContactList(contacts)
 
 
   })();
@@ -84,7 +96,7 @@ const StoryForm = () => {
         let data = await Story.getById(id);
         setTitle(data.title);
         setDescription(data.description);
-        setContactId(data.contactId);
+        setContactId(data.contact.id);
         return false
       })();
     }
@@ -121,6 +133,7 @@ const StoryForm = () => {
                 id="contactId"
                 options={contactList.map((option) => option.title)}
                 onChange={(e,v,r)=> handleContactId(v)}
+                value={findContact(contactId)}
                 renderInput={(params) => <TextField {...params} variant='outlined' label={storyTxt.contact} />}
             />
           </Grid>

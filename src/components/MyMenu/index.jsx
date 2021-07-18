@@ -18,7 +18,7 @@ export default function MyMenu(props) {
   const contacts = routes.contact.list;
   const home = routes.home.root;
   const record = routes.recorder.test;
-  const story = routes.story.new;
+  const story = routes.story.list;
 
   return (
     <div className={styles.root}>
