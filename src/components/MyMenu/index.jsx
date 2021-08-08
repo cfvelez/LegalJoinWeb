@@ -17,7 +17,6 @@ export default function MyMenu(props) {
   }
   const contacts = routes.contact.list;
   const home = routes.home.root;
-  const record = routes.recorder.test;
   const story = routes.story.list;
 
   return (
@@ -29,13 +28,6 @@ export default function MyMenu(props) {
           icon={<Inbox />}
           text={menuTxt.contacts}
           selected = {selected === contacts ? true : false}
-        />
-        <MyMenuItemLink
-          to={record}
-          onClick={() => handleItemClick(record)}
-          icon={<Voicemail />}
-          text={menuTxt.recordings}
-          selected = {selected ===  record ? true : false}
         />
         <MyMenuItemLink
           to={story}

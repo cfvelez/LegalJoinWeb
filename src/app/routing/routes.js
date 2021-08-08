@@ -3,6 +3,7 @@ import login from './Login'
 import contact from './Contact'
 import recorder from './VoiceRecorder'
 import story from './Story'
+import storypoint from './StoryPoint'
 
 const routes = {
   home,
@@ -10,6 +11,7 @@ const routes = {
   contact,
   recorder,
   story,
+  storypoint
 }
 
 export default routes

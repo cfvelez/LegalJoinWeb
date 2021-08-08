@@ -1,4 +1,4 @@
 const recorder = {
-  test:'/recoder/test'
+  record:'/recoder/record/:id'
 }
 export default recorder

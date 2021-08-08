@@ -6,7 +6,10 @@ import {changeDestination} from "../../../../utils/AppBehaviour";
 import MyEditButton from '../../../../components/MyEditButton';
 import Story from '../../../domains/Story'
 import MyDeleteButton from '../../../../components/MyDeleteButton';
+import MyIconButton from '../../../../components/MyIconButton';
 import {useHistory} from "react-router-dom";
+import AttachmentIcon from '@material-ui/icons/Attachment';
+import BookmarksIcon from '@material-ui/icons/Bookmarks';
 
 const loadServerRows  = async(page) => {
   return await all();
@@ -16,13 +19,13 @@ const loadServerRows  = async(page) => {
 /**
    * colAction - Config custom columns
    */
- const colAction = (field, headerName, action ) => {
+ const colAction = (field, headerName, action, witdth ) => {
 
      return {
          field: field,
          headerName: headerName,
          disableClickEventBubbling: true,
-         width:150,
+         width:witdth,
          renderCell: (params) => {
 
            const onClick = () => {
@@ -39,8 +42,12 @@ const loadServerRows  = async(page) => {
                 uiComponent = <MyDeleteButton onClick={onClick} >{headerName}</MyDeleteButton> ;
               break;
 
-              case 'add':
-                uiComponent =  <MyEditButton onClick={onClick}>{headerName}</MyEditButton> ;
+              case 'storypoint':
+                uiComponent =  <MyIconButton onClick={onClick} color="primary" label="seguimiento"><BookmarksIcon/></MyIconButton> ;
+              break;
+
+              case 'resource':
+                uiComponent =  <MyIconButton onClick={onClick} color="primary" label="recurso"><AttachmentIcon/></MyIconButton> ;
               break;
 
               default:
@@ -73,8 +80,16 @@ const StoryList = () => {
   };
 
   const addResource = (id) => {
-    alert('Adicionar recurso:'+id);
+    let destiny = routes.recorder.record.replace(':id' , id );
+    changeDestination(destiny);
+    history.replace(destiny);
  };
+
+ const addStoryPoint = (id) => {
+  let destiny = routes.storypoint.new.replace(':storyId' , id );
+  changeDestination(destiny);
+  history.replace(destiny);
+};
 
   const deleteAction = async (id) => {
     setLoading(true);
@@ -90,9 +105,10 @@ const StoryList = () => {
     const columns = [
       {field: "id", hide: true},
       {field: "title", headerName: "Título", width:200},
-      colAction('add', 'Recurso', (id)=>addResource(id)),
-      colAction('edit', 'Editar', (id)=>editAction(id)),
-      colAction('delete', 'Borrar', (id)=>deleteAction(id))
+      colAction('edit', 'Editar', (id)=>editAction(id), 120),
+      colAction('delete', 'Borrar', (id)=>deleteAction(id), 120),
+      colAction('storypoint', 'Evento', (id)=>addStoryPoint(id),140),
+      colAction('resource', 'Recurso', (id)=>addResource(id),140)
     ];
     return {'columns': columns , 'rows':[]}
   }

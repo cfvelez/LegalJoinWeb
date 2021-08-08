@@ -25,10 +25,10 @@ const MyAudioControl = (props) => {
       <Typography align="center">{props.name}</Typography>
       </Grid>
       <Grid item xs={1} >
-          <IconButton aria-label="delete" color="secondary"><DeleteIcon /></IconButton>
+          <IconButton aria-label="delete" color="secondary" onClick={() => { props.discard() }} ><DeleteIcon /></IconButton>
       </Grid>
       <Grid item xs={1} >
-          <IconButton aria-label="upload" color="primary"><CloudUploadIcon /></IconButton>
+          <IconButton aria-label="upload" color="primary" onClick={() => { props.upload() }}><CloudUploadIcon /></IconButton>
       </Grid>
     </Grid>
 

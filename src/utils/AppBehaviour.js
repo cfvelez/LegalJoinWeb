@@ -63,6 +63,9 @@ export const getAddRoute = () =>{
   if(navigation == routes.contact.list)
     presentScreen = routes.contact.new;
 
+  if(navigation == routes.story.list)
+    presentScreen = routes.story.new;
+
   return presentScreen;
 }
 

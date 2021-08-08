@@ -18,7 +18,6 @@ const MyApp = () => {
 
   const handleClickMenuItem = (route) => changeDestination(route);
   const isAuthorized = AuthManager.isAuthenticated(user);
-  console.log('Render..')
   return (
     <div className={style.root}>
       <BrowserRouter>

@@ -21,6 +21,7 @@ const loadServerRows  = async(page) => {
          field: field,
          headerName: headerName,
          disableClickEventBubbling: true,
+         width:150,
          renderCell: (params) => {
            const onClick = () => {
              return action(params.row.id);
