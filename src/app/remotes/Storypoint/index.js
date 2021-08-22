@@ -4,7 +4,8 @@ import storypointTxt from '../../../constants/txt/storypointTxt'
 
 export const create = async(storypoint) =>{
   var http = new httpClient();
-  var info = { storyId:storypoint.storyId, name: storypoint.title, description: storypoint.description, appointmentAt:storypoint.appointmentAt};
+  var info = { storyId: storypoint.storyId, name: storypoint.name, description: storypoint.description, appointmentAt: storypoint.appointmentAt};
+
   http.setToken();
   return http.axios.post('/storypoint',info)
     .then(() => {
@@ -25,7 +26,7 @@ export const all = async() =>{
 
 export const update = (storypoint)=> {
   var http = new httpClient();
-  var info = { storyId:storypoint.storyId, name: storypoint.title, description: storypoint.description, appointmentAt:storypoint.appointmentAt};
+  var info = {  id: storypoint.id, storyId:storypoint.storyId, name: storypoint.name, description: storypoint.description, appointmentAt:storypoint.appointmentAt};
   http.setToken();
   return http.axios.post(`/storypoint/${storypoint.id}`,info)
     .then(() => {

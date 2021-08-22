@@ -16,7 +16,7 @@ const MyDialogInput = (props) => {
 
   const style = MyDialogInputStyle();
   const [options, setOptions] = useState([ { title: ''}]);
-  const [storypointId, setStorypointId] = useState('');
+  const [storypointId, setStorypointId] = useState(-1);
 
   const findStoryPoint = (id) =>{
     let mystorypoint = options.filter( item => {
@@ -93,7 +93,7 @@ useEffect(() => {
           <Button onClick={props.handleClose} color="primary">
             Cancelar
           </Button>
-        {props.value.length > 2 && <Button onClick={props.handleAction} color="primary">Guardar</Button>}
+        { (props.value.length > 2 && storypointId > 0) &&  <Button onClick={()=>props.handleAction(storypointId)} color="primary">Guardar</Button>}
         </DialogActions>
       </Dialog>
     )

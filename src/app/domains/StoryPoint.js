@@ -1,4 +1,4 @@
-import {create, update, remove, get} from '../remotes/StoryPoint'
+import {create, update, remove, get} from '../remotes/Storypoint'
 export default class StoryPoint {
 
   constructor (id,storyId, name, description,appointmentAt) {

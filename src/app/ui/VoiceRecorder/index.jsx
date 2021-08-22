@@ -120,9 +120,9 @@ const VoiceRecorder = () => {
     setDialogVisible(true);
   }
 
-  const uploadAudio = async () =>{
+  const uploadAudio = async (storyPointId) =>{
     let base64File = storage.get(resource.id);
-    let resourceAudio = new ResourceObject(resource.title,1,base64File);
+    let resourceAudio = new ResourceObject(resource.title,1,storyPointId,base64File);
 
     let result = await resourceAudio.upload();
     if(result){
@@ -176,8 +176,8 @@ const VoiceRecorder = () => {
       if(storyId){
         (async () => {
           let data = await Story.getById(storyId);
-          setMyStory(data.title);
-          setMyContact(data.contact.name + ' ' + data.contact.lastname);
+          setMyStory(data?.title);
+          setMyContact(data?.contact?.name + ' ' + data?.contact?.lastname);
           return false
         })();
       }
@@ -192,7 +192,7 @@ const VoiceRecorder = () => {
           value = {resource.title}
           inputLabel = {recoderTxt.dialog.inputLabel}
           handleClose = {()=> setDialogVisible(false)}
-          handleAction = {()=> uploadAudio()}
+          handleAction = {(p)=> uploadAudio(p)}
           storyId = {storyId}
           handleResourceName = {(txt) => setResource({...resource, 'title': txt})}
         />
